@@ -1,6 +1,7 @@
 import pandas as pd
 from tqdm.auto import tqdm
 from sqlalchemy import create_engine
+import click
 
 year = 2021
 month = 1
@@ -36,7 +37,14 @@ parse_dates = [
 ]
 url = f'{prefix}yellow_tripdata_{year}-{month:02d}.csv.gz'
 
-def run():
+@click.command()
+@click.option('--pg-user', default='root', help='PostgreSQL user')
+@click.option('--pg-pass', default='root', help='PostgreSQL password')
+@click.option('--pg-host', default='localhost', help='PostgreSQL host')
+@click.option('--pg-port', default=5432, type=int, help='PostgreSQL port')
+@click.option('--pg-db', default='ny_taxi', help='PostgreSQL database name')
+@click.option('--target-table', default='yellow_taxi_data', help='Target table name')
+def run(pg_user, pg_pass, pg_host, pg_port, pg_db, target_table):
     engine = create_engine(f'postgresql://{pg_user}:{pg_password}@{pg_host}:{pg_port}/{pg_db}')
 
     df_iter = pd.read_csv(
@@ -74,6 +82,8 @@ def run():
     except Exception as e:
         print("Error during ingestion:", e)
         raise
+
+    pass
 
 if __name__ == '__main__':
     run()
