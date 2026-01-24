@@ -8,21 +8,19 @@ terraform {
 }
 
 provider "google" {
-  credentials = "/workspaces/data-engineering-zoomcamp/terraform/secrets/terraform-runner.json"
-  project = "clear-variety-485314-u8"
-  region  = "us-central1"
+  credentials = file(var.credentials)
+  project     = var.project
+  region      = var.region
 }
 
 resource "google_storage_bucket" "data-lake-bucket" {
-  name          = "clear-variety-485314-u8-terra-bucket"
-  location      = "US"
-
-  # Optional, but recommended settings:
-  storage_class = "STANDARD"
+  name                        = var.gcs_bucket_name
+  location                    = var.location
+  storage_class               = var.gcs_storage_class
   uniform_bucket_level_access = true
 
   versioning {
-    enabled     = true
+    enabled = true
   }
 
   lifecycle_rule {
@@ -30,9 +28,16 @@ resource "google_storage_bucket" "data-lake-bucket" {
       type = "Delete"
     }
     condition {
-      age = 30  // days
+      age = 30 // days
     }
   }
 
   force_destroy = true
+}
+
+resource "google_bigquery_dataset" "demo_dataset" {
+  dataset_id = var.bq_dataset_name
+  project    = var.project
+  location   = var.location
+  // delete_contents_on_destroy = true // deletes tables in dataset, else destroy will fail
 }
