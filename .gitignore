@@ -1,6 +1,3 @@
-# Don't commit service account details
-terraform/keys/terraform-runner.json
-
 # Don't commit any parquet files to git
 *.parquet
 
