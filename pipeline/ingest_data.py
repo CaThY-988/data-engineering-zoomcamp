@@ -3,8 +3,8 @@ from tqdm.auto import tqdm
 from sqlalchemy import create_engine
 import click
 
-year = 2021
-month = 1
+year = 2025
+month = 11
 prefix = 'https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/'
 pg_user = 'root'
 pg_pass = 'root'
@@ -87,6 +87,3 @@ def run(pg_user, pg_pass, pg_host, pg_port, pg_db, target_table):
 
 if __name__ == '__main__':
     run()
-
-
-
