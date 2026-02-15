@@ -1,0 +1,13 @@
+
+target/
+dbt_packages/
+logs/
+
+# Data directory
+data/
+
+#database
+taxi_rides_ny.duckdb
+
+#ingestion files
+*.py
