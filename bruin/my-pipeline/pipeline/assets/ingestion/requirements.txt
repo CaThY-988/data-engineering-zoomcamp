@@ -1,0 +1,12 @@
+
+# Docs: https://getbruin.com/docs/bruin/assets/python
+
+# Example:
+# pandas==2.2.0
+# requests==2.31.0
+
+pandas
+requests
+pyarrow
+python-dateutil
+
